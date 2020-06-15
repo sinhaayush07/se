@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="subscribe()"></button>
+
+  <script>
+    addEventListener('load', async () => {
+      let sw = navigator.serviceWorker.register('./sw.js');
+      console.log(sw);
+    })
+    async function subscribe () {
+      let sw = await navigator.serviceWorker.ready;
+      let push = await sw.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: 'BK0Kfo-fA5fAq-iABUF4BZiXoAclxmxAdxqMcTNl84uk5Wih9aN6qlfwRIAZiXxbF-lJ8mLH5SXdb6_T8tQ7p_M'
+      })
+      // normally this push object should be sent to an api 
+      // the api then iterates over these and send push notifications
+      console.log(JSON.stringify(push))
+    }
+  </script>
+</body>
+</html>
